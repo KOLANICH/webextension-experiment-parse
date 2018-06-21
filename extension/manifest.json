@@ -1,0 +1,23 @@
+{
+	"manifest_version" : 2
+	,"name" : "Reflect.parse injector"
+	,"description" : "Injects Reflect.parse API into every page."
+	,"version" : "0.0"
+	,"applications" : {
+		"gecko" : {
+			"id" : "reflectParseInject@experiments.addons.mozilla.org"
+		}
+	}
+	,"content_scripts": [
+		{
+			"matches":["<all_urls>"],
+			"js": ["utils.js", "contentScript.js"],
+			"run_at": "document_start"
+		}
+	]
+	,"background" : {
+		"scripts" : ["background.js"]
+	}
+	,"permissions" : ["tabs", "https://*/", "http://*/", "file://*/", "experiments.parse"] //it cannot be an optional permission for now :( This makes debugging a nightmare: I have to reinstall API first, and addon using it second
+	//,"optional_permissions" : ["experiments.scratchpad"] // browser.permissions.request({permissions: ['experiments.scratchpad'],})
+}

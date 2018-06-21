@@ -1,0 +1,28 @@
+{
+	// manifest and schema can contain single-line comments.
+	"manifest_version" : 2
+	,"name" : "Reflect.parse WebExtensions API"
+	,"description" : "Passes the Reflect.parse API into WebExtensions"
+	,"version" : "0.0"
+	,"developer": {
+		"name": "KOLANICH",
+		"url": "https://github.com/KOLANICH"
+	}
+	,"applications" : {
+		"gecko" : {
+			//the extension MUST have the id of format <permission name>@experiments.addons.mozilla.org, permission name is converted into addon identifier on import an extension requiring `experiments.<permission name>`, this is hardcoded: https://dxr.mozilla.org/mozilla-central/source/toolkit/components/extensions/Extension.jsm#660
+			//If this rule is violated, you won't see an error on installation of the API addon, but the addons using this permission won't be installed with ambigous error "incompatible";
+			"id" : "parse@experiments.addons.mozilla.org"
+		}
+	}
+	,"experiment_apis" : {
+		"parse" : { // identifier from the script. __FORMERLY__ COULD BE ANY matching the one within the script. NOW it MUS match API name !!!
+			"schema" : "schema.json", // Schema is cached, you have to restart the browser if you encounter any errors in it.
+			"parent" : {
+				"scopes" : ["addon_parent"],
+				"script" : "api.js",
+				"paths" : [["experiments", "parse"]] //must begin from "experiments" and must match to permission name 
+			}
+		}
+	}
+}
